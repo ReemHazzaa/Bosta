@@ -7,4 +7,7 @@
     <string name="no_users">No users found!</string>
     <string name="no_internet_connection">No internet connection!</string>
     <string name="no_api_response">No API response!</string>
+    <string name="profile">Profile</string>
+    <string name="my_albums">My Albums</string>
+    <string name="no_albums">No albums!</string>
 </resources>

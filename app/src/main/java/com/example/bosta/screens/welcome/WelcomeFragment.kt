@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.bosta.R
 import com.example.bosta.common.displayErrorSnackbar
 import com.example.bosta.common.makeGone
@@ -42,6 +43,11 @@ class WelcomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         requestUsersAPI()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     private fun requestUsersAPI() {
@@ -80,10 +86,7 @@ class WelcomeFragment : Fragment() {
 
     private fun navigateToProfile(user: User) {
         Log.e(TAG, "Navigating to user profile")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+        val action = WelcomeFragmentDirections.actionWelcomeFragmentToUserProfileFragment(user)
+        findNavController().navigate(action)
     }
 }
