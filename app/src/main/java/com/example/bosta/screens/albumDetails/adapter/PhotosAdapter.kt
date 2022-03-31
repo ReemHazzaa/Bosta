@@ -2,17 +2,17 @@ package com.example.bosta.screens.albumDetails.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.bosta.R
-import com.example.bosta.common.GlideApp
 import com.example.bosta.databinding.ItemPhotoBinding
 import com.example.bosta.screens.albumDetails.dataStructures.AlbumPhoto
 
-class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.AlbumViewHolder>() {
+class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.AlbumViewHolder>(), Filterable {
 
-    private var list = emptyList<AlbumPhoto>()
+    private var list = ArrayList<AlbumPhoto>()
+    private var listAll = ArrayList<AlbumPhoto>()
 
     class AlbumViewHolder(private val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -53,9 +53,43 @@ class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.AlbumViewHolder>() {
     fun setList(albumsList: List<AlbumPhoto>) {
         val tasksDiffUtil = PhotosDiffUtil(list, albumsList)
         val diffUtilResult = DiffUtil.calculateDiff(tasksDiffUtil)
-        list = albumsList
+        list = albumsList as ArrayList<AlbumPhoto>
         diffUtilResult.dispatchUpdatesTo(this)
     }
 
+    fun setListAll(albumsList: List<AlbumPhoto>) {
+        listAll = albumsList as ArrayList<AlbumPhoto>
+    }
+
     fun getList(): List<AlbumPhoto> = list
+
+    override fun getFilter(): Filter {
+        return myFilter
+    }
+
+    private var myFilter: Filter = object : Filter() {
+        override fun performFiltering(charSequence: CharSequence): FilterResults {
+            val filteredList: MutableList<AlbumPhoto> = ArrayList()
+            if (charSequence.isEmpty()) {
+                filteredList.addAll(listAll)
+            } else {
+                for (photo in listAll) {
+                    if (photo.title.toString().contains(charSequence.toString(), true)) {
+                        filteredList.add(photo)
+                    }
+                }
+            }
+            val filterResults = FilterResults()
+            filterResults.values = filteredList
+            return filterResults
+        }
+
+        override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+            try {
+                setList(filterResults.values as List<AlbumPhoto>)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 }

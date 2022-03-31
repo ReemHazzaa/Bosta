@@ -14,6 +14,8 @@
         tools:context=".screens.albumDetails.AlbumDetailsFragment">
 
         <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            app:queryHint="Search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

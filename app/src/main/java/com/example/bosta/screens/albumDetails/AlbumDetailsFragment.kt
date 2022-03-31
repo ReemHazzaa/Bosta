@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -48,6 +49,21 @@ class AlbumDetailsFragment : Fragment() {
             requestPhotosAPI()
         }
 
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                photosAdapter.filter.filter(newText)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+
+                return false
+            }
+
+        })
+
+
         setUpRecyclerView()
         requestPhotosAPI()
 
@@ -64,6 +80,7 @@ class AlbumDetailsFragment : Fragment() {
                         response.data.let {
                             @Suppress("UNCHECKED_CAST")
                             photosAdapter.setList(it as List<AlbumPhoto>)
+                            photosAdapter.setListAll(it)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
