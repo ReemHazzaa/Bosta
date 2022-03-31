@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="userProfileViewModel"
             type="com.example.bosta.screens.userProfile.UserProfileViewModel" />
@@ -46,13 +45,14 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginTop="4dp"
                 android:id="@+id/userAddressTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="4th Flowers street, ElMaadi- Cairo, Egypt"
                 android:textColor="@color/black"
                 android:fontFamily="@font/aladin"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/userPhoneTV"
@@ -61,11 +61,12 @@
                 tools:text="01234567894"
                 android:textColor="@color/black"
                 android:fontFamily="@font/aladin"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/myAlbumsTV"
             android:layout_width="0dp"
             android:textColor="@color/black"
